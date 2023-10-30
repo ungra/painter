@@ -16,13 +16,27 @@ const colors = [
   "#95a5a6",
 ];
 
-function onClick(event) {
-  ctx.beginPath();
-  ctx.moveTo(800, 800);
-  const color = colors[Math.floor(Math.random() * colors.length)];
-  ctx.strokeStyle = color;
-  ctx.lineTo(event.offsetX, event.offsetY);
-  ctx.stroke();
+let isPainting = false;
+
+function onMouseMove(event) {
+  if (isPainting) {
+    ctx.lineTo(event.offsetX, event.offsetY);
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.fill();
+    return;
+  }
+  ctx.moveTo(event.offsetX, event.offsetY);
+}
+function startPainting() {
+  isPainting = true;
+}
+function endPainting() {
+  isPainting = false;
 }
 
-canvas.addEventListener("mousemove", onClick);
+canvas.addEventListener("mousemove", onMouseMove);
+canvas.addEventListener("mousedown", startPainting);
+canvas.addEventListener("mouseup", endPainting);
+canvas.addEventListener("mouseleave", endPainting);
