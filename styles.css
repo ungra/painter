@@ -15,3 +15,8 @@ body {
   height: 50px;
   cursor: pointer;
 }
+
+button {
+  width: 50px;
+  height: 50px;
+}
